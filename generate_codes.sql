@@ -3,11 +3,11 @@ AS
 BEGIN
   -- Koddaki karakterler
   DECLARE @characters VARCHAR(20) = 'ACDEFGHKLMNPRTXYZ234579'
-  -- Geçici tablo için ad
+  -- GeÃ§ici tablo iÃ§in ad
   DECLARE @tempTable NVARCHAR(128) = '#tempCodes'
-  -- Kaç adet kod üretileceði
+  -- KaÃ§ adet kod Ã¼retileceÄŸi
   DECLARE @numberOfCodes INT = 1000
-  -- Kod uzunluðu
+  -- Kod uzunluÃ°u
   DECLARE @codeLength INT = 8
   
   IF OBJECT_ID(N'tempdb..' + @tempTable) IS NOT NULL
@@ -19,11 +19,11 @@ BEGIN
   BEGIN
     DECLARE @code NVARCHAR(20) = ''
     
-    -- Kod üretme iþlemi
+    -- Kod Ã¼retme iÅŸlemi
     WHILE LEN(@code) < @codeLength
       SET @code = @code + SUBSTRING(@characters, CAST(RAND() * LEN(@characters) + 1 AS INT), 1)
     
-    -- Kodun geçici tabloda var olup olmadýðýný kontrol etme iþlemi
+    -- Kodun geÃ§ici tabloda var olup olmadÄ±ÄŸÄ±nÄ± kontrol etme iÅŸlemi
     IF NOT EXISTS (SELECT * FROM #tempCodes WHERE Code = @code)
     BEGIN
       INSERT INTO #tempCodes VALUES (@code)
